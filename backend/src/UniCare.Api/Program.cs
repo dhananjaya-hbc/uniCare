@@ -1,7 +1,7 @@
+using System.Text.Json.Serialization;
 using DotNetEnv;
 using Scalar.AspNetCore;
-using System.Text.Json.Serialization;     // ← ADD (JsonStringEnumConverter, line 15)
-using UniCare.Api.Middleware;             // ← ADD (GlobalExceptionHandler)
+using UniCare.Api.Middleware;
 using UniCare.Application;
 using UniCare.Infrastructure;
 
@@ -27,7 +27,6 @@ builder.Services.AddApplication();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-// In development the Vite dev server proxies...
 // In development the Vite dev server proxies /api to this process, so requests are
 // same-origin and CORS never applies. This policy is for deployed environments where
 // the SPA is served from a different origin.
