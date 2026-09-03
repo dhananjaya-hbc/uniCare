@@ -1,11 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from '@/components/ui/table'
-import { ThemeToggle } from '@/components/common/ThemeToggle'
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '@/components/ui/table'
 import { getApiErrorMessage } from '@/lib/api-client'
 import { CreateStudentDialog } from './components/CreateStudentDialog'
 import { useStudents } from './hooks'
@@ -36,10 +34,7 @@ export function StudentsPage() {
             {data ? `${data.totalCount} registered` : 'Loading…'}
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <CreateStudentDialog />
-        </div>
+        <CreateStudentDialog />
       </div>
 
       <div className="mb-4 flex items-center gap-3">
@@ -92,7 +87,14 @@ export function StudentsPage() {
             {data?.items.map((student) => (
               <TableRow key={student.id}>
                 <TableCell className="font-mono text-xs">{student.registrationNumber}</TableCell>
-                <TableCell className="font-medium">{student.fullName}</TableCell>
+                <TableCell className="font-medium">
+                  <Link
+                    to={`/students/${student.id}/medical-profile`}
+                    className="hover:underline"
+                  >
+                    {student.fullName}
+                  </Link>
+                </TableCell>
                 <TableCell>{student.faculty}</TableCell>
                 <TableCell>{student.department}</TableCell>
                 <TableCell className="text-right tabular-nums">{student.academicYear}</TableCell>
@@ -110,11 +112,11 @@ export function StudentsPage() {
           </p>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" disabled={page <= 1}
-                    onClick={() => setPage((p) => p - 1)}>
+              onClick={() => setPage((p) => p - 1)}>
               Previous
             </Button>
             <Button variant="outline" size="sm" disabled={page >= data.totalPages}
-                    onClick={() => setPage((p) => p + 1)}>
+              onClick={() => setPage((p) => p + 1)}>
               Next
             </Button>
           </div>
