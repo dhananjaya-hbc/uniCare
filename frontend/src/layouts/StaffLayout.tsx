@@ -11,7 +11,9 @@ export function StaffLayout() {
   return (
     <div className="flex min-h-svh bg-background">
       <aside className="flex w-56 shrink-0 flex-col border-r border-border p-4">
-        <p className="mb-6 text-sm font-semibold">UniCare</p>
+        <div className="mb-6 flex items-center justify-between gap-2">
+          <p className="text-sm font-semibold">UniCare</p>
+        </div>
         <nav className="flex flex-col gap-1">
           {links.map(({ to, label }) => (
             <NavLink
@@ -29,7 +31,7 @@ export function StaffLayout() {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto pt-4">
+        <div className="mt-auto border-t border-border pt-4">
           <ThemeToggle />
         </div>
       </aside>
