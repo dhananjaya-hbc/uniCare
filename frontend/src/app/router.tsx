@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ROLES, STAFF_ROLES } from '@/config/roles'
 import { ROUTES } from '@/config/routes'
+import { MedicalProfilePage } from '@/features/medical-profiles/MedicalProfilePage'
 import { StudentsPage } from '@/features/students/StudentsPage'
 import { SystemStatusPage } from '@/features/system/SystemStatusPage'
 import { AuthLayout } from '@/layouts/AuthLayout'
@@ -15,25 +16,29 @@ import { ProtectedRoute } from './ProtectedRoute'
 export function AppRouter() {
   return (
     <Routes>
-      {/* Public */}
-      <Route path={ROUTES.systemStatus} element={<SystemStatusPage />} />
-      {/* TODO(auth): move inside ProtectedRoute allowedRoles={STAFF_ROLES} once login exists */}
-      <Route path="/students" element={<StudentsPage />} />
+      {/* TODO(auth): wrap this group in <ProtectedRoute allowedRoles={STAFF_ROLES} />
+          once login exists. Until then these pages are reachable by anyone. */}
+      <Route element={<StaffLayout />}>
+        <Route path={ROUTES.systemStatus} element={<SystemStatusPage />} />
+        <Route path="/students" element={<StudentsPage />} />
+        <Route path="/students/:studentId/medical-profile" element={<MedicalProfilePage />} />
+      </Route>
+
       <Route element={<AuthLayout />}>
         {/* TODO(auth): <Route path={ROUTES.login} element={<LoginPage />} /> */}
       </Route>
 
-      {/* Student area */}
+      {/* Student area — empty until login exists; ProtectedRoute redirects everything. */}
       <Route element={<ProtectedRoute allowedRoles={[ROLES.Student]} />}>
         <Route element={<StudentLayout />}>
           {/* TODO: student dashboard, medical profile, documents, appointments */}
         </Route>
       </Route>
 
-      {/* Staff area */}
+      {/* Staff area — populated once the group above moves behind the guard. */}
       <Route element={<ProtectedRoute allowedRoles={STAFF_ROLES} />}>
         <Route element={<StaffLayout />}>
-          {/* TODO: staff dashboard, students, appointments, queue, pharmacy, lab */}
+          {/* TODO: staff dashboard, appointments, queue, pharmacy, lab */}
         </Route>
       </Route>
 
