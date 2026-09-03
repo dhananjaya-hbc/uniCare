@@ -1,6 +1,7 @@
-using FluentValidation;                             
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using UniCare.Application.Features.Students;        
+using UniCare.Application.Features.MedicalProfiles;
+using UniCare.Application.Features.Students;
 
 namespace UniCare.Application;
 
@@ -15,6 +16,7 @@ public static class DependencyInjection
     {
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         services.AddScoped<IStudentService, StudentService>();
+        services.AddScoped<IMedicalProfileService, MedicalProfileService>();
 
         return services;
     }
