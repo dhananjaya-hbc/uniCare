@@ -4,6 +4,7 @@ using UniCare.Application.Features.Appointments;
 using UniCare.Application.Features.MedicalDocuments;
 using UniCare.Application.Features.MedicalProfiles;
 using UniCare.Application.Features.Students;
+using UniCare.Application.Features.Visits;
 
 namespace UniCare.Application;
 
@@ -21,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IMedicalProfileService, MedicalProfileService>();
         services.AddScoped<IMedicalDocumentService, MedicalDocumentService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IVisitService, VisitService>();
 
         return services;
     }
